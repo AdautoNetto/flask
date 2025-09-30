@@ -1,0 +1,35 @@
+crie uma pasta para o seu projeto
+
+crie um ambiente virtual para poder deixar o seu projeto mais limpo no final
+levar com ele depois só as bibliotecas e as funcionalidades especificas de seu
+projeto e não pesar tanto ele
+
+com criar um ambiente virtual
+	clique em terminal e em novo terminal
+
+	mude o terminal do seu compilador de código para CMD se estiver em 
+	powershell
+	
+	escreva no terminal para criar um ambiente
+		python -m venv .nome-ambiente
+		-m -> para trazer uma função
+		venv -> funçao de criar um ambiente virtual
+		nome-ambiente -> posso dar qualquer nome, mas de preferencia use
+			.venv
+
+	para ativar o ambiente virtual criado 
+		escreva no terminal par ativar o ambiente virtual 
+			cd .venv /scripts
+		após o primeiro comandos escreva activate para ativar 
+
+		após a ativação do ambiente virtual volte para a pasta principal
+			cd ../..
+
+instale a biblioteca desejada (flask)	
+	como instalar o flask
+		digite no terminal
+			pip install flask
+
+
+			
+

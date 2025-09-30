@@ -1,0 +1,37 @@
+ao instalar o flask e criar o meu sistema virtual eu crio um arquivo main.py na pasta principal do meu projeto
+
+criar um sistema virtual é bom porque quando eu for rodar ele nas maquinas dos meu clientes ele não instala todas
+as bibliotecas que tem, somente as que precisa 
+
+ao criar o meu arquivo main.py na minha pasta principal eu importo a biblioteca flask
+	from flask import Flask
+
+depois de importar a minha pasta eu inicializo o meu aplicativo 
+	app = Flask(__name__)
+	rodo essa linha de código para o meu aplicativo app pegar o nome do meu arquivo que estou mexendo (main.py)
+
+depois preciso passar uma rota 
+	app.route('rota quie eu vou passar')
+	@app.route('/') -> essa é a pagina princiapl do meu aplicativo
+
+o que é uma rota -> tudo o que vem depois da url de um site é uma rota 
+	youtube.com/@dautinn -> @dautinn é uma rota 
+
+passar a minha função que lee vai redenrizar a minha página 
+	def homepage():
+		return 'Minha Página Flask.'
+
+	esse comando é o que vai pegar onde está os arquivos html, css, js e etc do meu projeto e jogar para o google
+	posso colocar depois do return os arquivos do meu projeto 
+
+para rodar o meu aplicativo 
+	app.run()
+
+	ao colocar esse comando posso ter o perigo de deixar ele rodando sem eu querer e por isso antes dele eu
+	e coloco uma condição que o app só vai ser rodado se quem chamar ele for o meu arquivo principal
+		if __name__ = '__main__'
+			app.run(debug=True)
+			comando debug=True é criado para que sempre que estiver uma atualização em meu código ele
+			roda
+
+

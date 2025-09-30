@@ -1,0 +1,19 @@
+padrão MVC 
+	conceito de separar os meus arquivos para cada arquivo trabalhar com algo 
+	um arquivo para trablahar com os meus modelos, um arquivo para trabalhar com os views, um arquivo para 
+	trabalhar com minhas rotas, um arquivo para trabalhar com os modelos da minha página
+
+flask não tem um padrão bem estruturado no MVC, mas posso usar a mesma estrutura de outro framework, chamado django
+
+sempre trabalhe no conceito MVC
+
+models = models -> são os arquivos que vão trabalhar com o banco de dados
+views = templates -> onde vai estar o meu front-end (pasta onde vai ter meus arquivos html)
+controlers = routes(views) -> arquivo que vai trabalhar com minhas rotas
+
+
+requisição GET -> quando o usuario solicita algo para o meu servidor pode ou não pegar informações do bd
+
+requisição POST -> quando eu envio dados para o servidor, finalidade criar, atualizar ou excluir dados de um bd
+
+

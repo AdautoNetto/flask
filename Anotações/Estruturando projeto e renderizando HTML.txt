@@ -1,0 +1,4 @@
+como rodar um arquivos através de comando no terminal
+	python nome do aquivo
+	python main.py
+

@@ -1,0 +1,8 @@
+flask é um micro framework de python para criação de paginas web
+
+existem varios outros frameworks
+
+o recomendando ao criar sistemas, paginas web e projetos maiores em python é ter diferentes 
+arquivos 
+
+                           
