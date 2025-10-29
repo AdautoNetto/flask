@@ -1,0 +1,164 @@
+formulários -> serve para enviar inormções para o servidor ou buscar informações
+de um servidor
+	tipo de uso de formulários 
+		get -> busca uma informação do servidor
+		post -> manda informações para o servidor 
+
+formulário html -> menos segurança mais facil
+	get -> busca uma informação do servidor
+		criar uma página html em templates e renderizar ele na minha view
+		depois de ter criado uma págin html 
+		para mandar o que o usuario digitou para o meu código eu preciso importar
+		uma ferramenta do flask (request) dentro do arquivo views e dentro dele
+		apontar a minha página criada e faço um condição para verificar se é o
+		metodo get que estamos utilizando
+			if request.method == 'GET':
+				pesquisa = request.args.get('pesquisa')
+				print(pesquisa)
+	post -> manda informações para o servidor, ele é mais seguro
+		não aparece na página o que o usuario digitou
+		mesma construção do GET, mas em action no method coloco tipo post
+		no arquivo views preciso informar que ele vai receber do tipo post
+		por padrão ela recebe do tipo GET
+		fazer uma condição para POST
+			if request.method == 'POST':
+        			pesquisa = request.form['pesquisa']
+       				print('POST:', pesquisa) 
+		
+	para salvar o formulário em meu banco de dados - (esse jeito não é o correto)
+		arrumo o html -> crio campos de respostas com o nome que está no banco de dados
+		preciso recuperar o que o usuario digitou dentro do arquivo views
+			if request.method == 'POST':
+        			nome = request.form['nome']
+        			email = request.form['email']
+        			assunto = request.form['assunto']
+        			mensagem = request.form['mensagem']
+		preciso importar o meu banco de dados para o views
+			from estudo.models import Contato	
+			from estudo import app, db
+		criar a instancia do meu arquivo do banco de dados
+			contato = Contato(
+            		nome=nome,
+            		email=email,
+            		assunto=assunto,
+            		mensagem=mensagem
+           		) 
+		preciso informar a instancia de contato no meu banco de dados
+			db.session.add(contato)
+			db.session.commit()
+		resumoo -> recuperar os dados que o usuario digitou, com esses
+		dados recuperados crio um objeto e com sse objeto passo ele para 
+		uma sessão e pego essa sessão e salvo no banco de dados
+			
+formulário flask -> mais segurança - jeito correto de fazer um formulário
+	preciso instalar a ferramenta flask_wtf
+		pip install flask_wtf
+	principais estilos de campos de formulário 
+		StringField -> campo  de texto simples 
+		IntegerField -> Numeros Inteiros
+		FloatField -> Numeros decimais 
+		BooleandField -> verdadeiro o falso
+		DateFied - Data
+		SelectField -> dropdown para selecionar opções
+		RadioField -> seleção de opções
+		TextAreaField -> textos multiplanilhas
+		FileField -> para adicionar arquivos
+		passwordField -> para capturar senhas 
+		SubmitField -> para enviar 
+		DataRequired -> garante que um campo não seja enviado em branco
+		Length ->(min-x max=y) -> define limites para tam de um campo
+		Email -> verifica se possui o formato de um email válido
+		Equalto(fieldname) -> para garantir que 2 campos tenha valores iguais (senhas)
+		NumberRange(min=x max=y) -> limita os valores numericos aceitaveis em um intervalo
+		Regexp(Regex, message=none) -> usa expressões regulares para validar o formato do campo
+		AnyOf(choices) -> verifica se o valor do campo está entre m conjunto especifico de valores
+		NoneOf(values) -> garante que o valor do campo nçao esteja em um conjunto especifico de valores
+		URL -> verifica se possui formato URL válido
+		Optional -> torna um campo opcional
+		FileAllowed(upload_set, message=None) -> valida se o arqivo enviado pertence a um conjunto especifico de tipos permitidos
+	
+	podemos criar as nossas proprias validações 
+
+	como startar a nossa classe
+		criar um arquivo em python(forms)
+		importa a ferramenta do flask para trablhar com formulários
+			from flask_wtf import FlaskForm
+		importar os estlos que vou trabalhar em meu usuario 
+			from wtforms import StringField
+		ciar uma classe p/ o formulário
+			class nometabelaForm(FlaskForm):
+		pegar os campos da minha tabela e colocar na minha classe
+			class ContatoForm(FlaskForm):
+    				nome = StringField()
+    				email = StringField()
+    				assunto = StringField()
+    				mensagem = StringField()
+    				btnSubmit = SubmitField()
+		passar os parametros em cada campo colocado
+		primeiro passar o nome dele 
+			class ContatoForm(FlaskForm):
+    				nome = StringField('Nome')
+    				email = StringField('E-Mail')
+   				assunto = StringField('Assunto')
+    				mensagem = StringField('Mensagem')
+    				btnSubmit = SubmitField('Enviar')
+
+		adicionar validações - precisa ser preenchido pra enviar 
+			preciso importar a ferramenta de validações
+				from wtforms.validators import DataRequired
+			adicionar essa ferramenta nos meus campos 
+				class ContatoForm(FlaskForm):
+    					nome = StringField('Nome', validators=[DataRequired()])
+    					email = StringField('E-Mail', validators=[DataRequired()])
+    					assunto = StringField('Assunto', validators=[DataRequired()])
+  	  				mensagem = StringField('Mensagem', validators=[DataRequired()])
+    					btnSubmit = SubmitField('Enviar', validators=[DataRequired()])
+		a ferramenta validator=[] pode ser preenchida com varios tipos de validações passo essas validações em forma de atributos
+		para a validação email funcionar preciso importar ela e baixar mais uma ferramenta
+			pip install email_validator
+
+	adicionar o arquivo criado no meu arquivo view
+		importar o meu arquivo html
+		colocar ele dentro da função da minha pagina
+		colocar ele no return 
+			form=form	
+	criar um arquivo html 
+		contato.html
+	adicionar um token de segurança
+		{{form.csrf_token}}
+	passar um security key para o meu token de segurança
+		ir no arquivo __init__ meu aplicativo e passar uma chave secreta
+	app.config['SECRET_KEY'] = 'AS56D1A65F16SA5D1FG52677-A12343!!S65DF1AS561FDA5'
+	nunca deixar essa chave exposta, deixar em uma variavel de ambiente
+
+
+	resumo -> 
+	criar um formulario e dentro dele tem que ter todos os campos
+	do meu banco de dados que o usuario vai responder(configurar os tipos de
+	respostas que quero ter no meu formulário. importar as ferramentas de
+	wtforms e colocar validators para a validação importando as ferramnetas)
+
+	cria uma função dentro do meu bd que tem a função de salvar as respostas
+	do usuario no meu banco de dados (importar o arquivo html)
+
+	a views tem a responsabilidade de pegar o formulário, verificar se 
+	foi submetido, salvar o formulário e redirecionar a página se deu tudo 
+	certo e tratar erros 
+
+	
+
+	
+	
+	  
+	
+
+
+
+
+
+
+
+
+
+
+	

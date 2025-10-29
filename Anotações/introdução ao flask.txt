@@ -5,4 +5,5 @@ existem varios outros frameworks
 o recomendando ao criar sistemas, paginas web e projetos maiores em python é ter diferentes 
 arquivos 
 
-                           
+como chamar uma variavel 
+	{{ nome.variavel }}                           

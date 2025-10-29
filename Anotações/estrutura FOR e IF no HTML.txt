@@ -1,0 +1,16 @@
+para usar a estrutura de repetição FOR dentro do html usando o flask
+	primeiro eu preciso declarar o inicio dela
+		{% for linha in context['dados'] %}
+	eu nao posso fazer o for igual eu faço no python
+
+	depois preciso finalizar ela
+		{% endfor %}
+	
+para usar a estrura de condição IF é igual o FOR 
+	eu preciso abrir e fechar ele 
+		{% if teste lógico %}
+
+		{% endif %}
+	para usar o else
+		{% else %}
+

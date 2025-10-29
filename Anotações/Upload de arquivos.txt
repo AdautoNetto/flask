@@ -1,0 +1,78 @@
+o arquivo em si não é salvo no banco de dados, mas o nome do arquivo que
+eu vou salvar na minha pasta do servidor dentro da pasta static 
+
+como fazer upload de arquivos no meu sistema
+
+passo a passo para configurar o upload de arquivos 
+	criar a pasta no servidor dentro do arquivo static chamada data e uma
+	dentro da data chamada post para receber outro tipo de arquivo 
+
+	configurar a pasta no app.config 
+		abrir o arquivo init.py 
+		criar a minha pasta depois da criação do app
+			app.config['UPLOAD_FILES'] = r'static/data'
+	
+	alterar o MODELS para receber o nome do arquivo
+		abrir o arquivo models.py
+		dentro da classe Post crio mais um campo para imagem
+			imagem = db.Column(db.String, nullable=True, default='default.png')
+			lembrar de da o flask db migrate e upgrade
+
+	alterar o Form para salvar o arquivo na pasta e o nome no banco de dados
+		abrir o arquivo forms.py
+			fazer a importação das seguintes ferramentas e bibliotecas
+				from wtforms import FileField
+				import os -> para salvar
+				from werkzeug.utils import secure_filename -> para deixar o nome seguro
+			criar o campo imagem na classe PostForm
+				imagem = FileField('imagem', validators=[DataRequired()])
+			configurar o campo criado dentro das funções para salvar a imagem
+				para pegar a imagem e trabalhar com ela 
+					imagem = self.imagem.data
+				para colocar um nome seguo na imagem
+					nome_seguro = secure_filename(imagem.filename)
+				adicionar imagem = nome_seguro dentro do post = Post
+					post = Post (
+                				mensagem = self.mensagem.data,
+                				user_id = user_id,
+                				imagem = nome_seguro
+            					)
+			para pegar o caminho que eu vou salvar o arquivo, fazer esse passo a passo dentro da função save
+				caminho = os.path.join(
+                 			os.path.abspath(os.path.dirname(__file__)) #pegar a pasta que está no nosso projeto 
+                 			app.config['UPLOAD_FILES'] #definir a pasta que configuramos para UPLOAD
+                 			'post', nome_seguro #defino nome seguro pra ela e a pasta que está os POST  
+            				)
+            				imagem.save(caminho) #salvar no bd
+	
+	ir no arquivo onde vou fazer o front do lugar onde vou mostrar o arquivo
+		ir no arquivo post.html 
+	 		adicionar a imagem pelo caminho dela dentro da div que eu quero
+				<img src="{{ url_for('static', filename='data/post/{}'.format(post.imagem) ) }}">
+	ir no arquivo onde vou fazer o front do lugar onde vou pegar o arquivo 
+		ir no arquivo pont_novo.html
+			adicionar o campo para pegar a imagem e adicionar a funcionalidade a div para recebr arquivos
+				essa funcionalidade -> enctype="multipart/form-data
+				{{ form.imagem.label() }}
+                		{{ form.imagem(class="form-control") }}     
+
+resumo aula
+	primeiro passo é criar a pasta e definir onde vai ficar os meus arquivos 
+	
+	depois de definir a pastar configuro ela dentro do app
+
+	dentro do models adicionei um campo para receber a imagem
+
+	dentro do forms eu importei o file fiels e outras funcionalidades e dentro
+	da classe postForm na função save eu coloquei para salvar o arquivo 
+
+	
+
+
+
+
+
+
+
+			
+			

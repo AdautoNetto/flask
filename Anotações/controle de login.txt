@@ -1,0 +1,204 @@
+configuração e models para trabalhar com controle de usuario, login e logout
+
+para implementar o login de usuario 
+------------------------------primeira aula--------------------------------------
+	configurar meu app
+		instalar bibliotecas para ter controle da sessão e criptografar senhas de usuario
+			pip install flask-login flask-bcrypt
+		ir no arquivo __init__.py e configurar o meu controle de sessão
+			importar as duas bibliotecas
+				from flask_login import loginManager
+				from flask_bcrypt import bcrypt
+
+			embaixo da configuração do migrate eu configuro o login e bcrypt
+			login_manager = loginManager(meu aplicativo)
+			login_manager.login_view = 'login' -> para fazer o controle de login para acessas tals paginas
+			bcrypt = Bcrypt(meu aplicativo)
+	criar models de usuario
+		importar a biblioteca login manager 
+			from estudo import login_manager
+
+		importar usermixir para informar qual o modelo de usuario
+			from flask_login import UserMixin
+		
+		ir no arquivo models.py e importar models de usuario
+			crio uma classe  e chamo o db.model
+				class User (db.Model, UserMixin): - passar os campos que preciso para trabalhar com usuario
+    					id = db.Column(db.Integer, primary_key=True)
+    					nome = db.Column(db.String, nullable=True)
+    					sobrenome = db.Column(db.String, nullable=True)
+    					email = db.Column(db.String, nullable=True)
+    					senha = db.Column(db.String, nullable=True)
+			chamar o migrate para atualizar as edições que fiz no meu banco de dados
+				dentro do terminal
+					flask db migrate
+					flask db upgrade
+		configurar como recuperar o usuario para fazer a sessão - sempre vou implementar isso para controle de login
+			criar uma função - para informar qual usuario vai retornar 
+				@login_manager.user_loader
+				def load_user(user_id):
+    					return User.query.get(user_id)
+
+fazendo isso ja deixei meu aplicativo preparado para receber controle de login
+------------------------------segunda aula----------------------------------------
+	criar formulário de cadastro de usuario
+		dentro do arquivo forms.py
+			importar o passwordfield
+				from wtforms import PaswwordFields
+
+			importar o EqualTO - verifica se um campo é igual a outro 
+				from wrforms_validators import EqualTo
+
+			criar a classe userform que vai receber flaskform e vou implementar todos os campos que eu preciso
+				class UserForm(FlaskForm):
+    					nome = StringField('Nome', validators=[DataRequired()])
+    					sobrenome = StringField('Sobrenome', validators=[DataRequired()])
+    					email = StringField('E-Mail', validators=[DataRequired(), Email()])
+    					senha = PasswordField('Senha', validators=[DataRequired()])
+					confirmacao_senha = PasswordField('Senha', validators=[DataRequired(), EqualTo('senha'])
+					btnSubmit = SubmitField('Cadastrar')
+
+				no campo senha eu coloco o tipo como PasswordField
+				no campo confirmacao_senha eu passo o equal to e dentro dele passo o campo que eu quero confirmar
+			
+			verificar se o email é unico - dessa forma posso criar qualquer logica para validar algo em meu banco de dados 
+				importar biblioteca ValidationError
+					from wtforms_validator import ValidationError
+				importar meu usuario
+					from estudo.models import User
+
+				adicionar o validator dentro da minha classe userform
+					def validade_email(self, email): - o nome da função precisa ser validade + nome do campo que ele vai validar
+				
+				crio uma condição que vai verificar se o meu email ja exite
+					def validade_email(self, email):
+						if User.query.filter(email=email.data).first():
+							return validatorerror('usuario ja cadastrado com esse email')
+			
+			criar funçaõ para salvar o usuario no banco de dados 
+				def save(self):
+
+			criar a logica para salvar no banco de dados
+				criptografar a minha senha 		
+					importar o bcryt 
+						from estudo.models import bcrypt
+					
+					def save(self):
+					senha = bcrypt.generate_password_hash(self.senha.data.encode('utf-8') - utilizo encode('utf-8') para poder trabalhar com caracteres especiais
+			
+			criar o usuario para salvar 
+				user = User(
+					nome = self.nome.data,
+					sobrenome = self.sobrenome.data,
+					email = self.email.data,
+					senha = senha - recebo ja a senha criptografada
+					)
+				salvar isso banco de dados
+					db.session.add(user)
+					db.session.commit()		
+						
+				retornar usuario 
+					return user
+
+resumo -> criei um formulário padrão passando todos os campos que eu preciso com validator e datarequireddentro do arquivo forms
+	  criamos a verificação de o email já esta cadastrado
+	  confirmação de senha para digitar a mesma senha duas vezes
+	  criamos a função de slvar usuario e depois salvar ele no meu banco de dados
+
+	implementação da minha view e criar o arquivo de cadastro de usuario
+		ir no arquivo views.py
+			criar uma nova rota para o arquivo cadastro
+				@app.route('/cadastro/', methods=['GET', 'POST'])
+				def cadastro():	
+					return render_template('cadatro.html')
+			definir(passar) formulário
+				importar o UserForm de estudo.forms
+				@app.route('/cadastro/')
+				def cadastro():	
+					form = UserForm()
+					return render_template('cadatro.html', form=form)
+					
+			passar os dados do banco de dados que vou preencher
+			fazer uma condição para verificar se os dados colocados estão corretos para cadastro
+				if form.validate_on_submit():
+			importar funções do flask login 
+				from flask_login import login_user, logout_user, current_user
+			para verificar se o usuario está logado 
+				if current_user.is_authenticated
+
+			login_user(user, remember=True) -> o remember serve para o site nao deslogar o usuario se ele abrir outra aba
+
+
+
+----------------------------terceira aula-----------------------------------------
+	criar formulário de login
+		dentro do arquivo views.py
+			vou criar a função dentro do meu home para aproveitar
+			
+			preciso criar o meu formulario
+				class LoginForm(FlaskForm):
+    					email = StringField('E-Mail', validators=[DataRequired(), Email()])
+    					senha = PasswordField('Senha', validators=[DataRequired()])
+    					btnSubmit = SubmitField('Login')	
+			criar a minha função para login
+				def login(self):
+        				#recuperar o usuario do email
+        				user = User.query.filter_by(email=self.email.data).first()
+
+       					 #verificar se a senha é valida
+        				if user:
+            					if bcrypt.check_password_hash(user.senha, self.senha.data.encode('utf-8')):
+               						#login user
+                					return user
+            						else:
+                						raise Exception('Senha está incorreta!!!')
+       			 		else:
+            					raise Exception('Usúario não encontrado!!!')
+
+
+	criar view para login
+		dentro do arquivo view.py 
+			Pegar o formulário criado para login 
+				from estudo.forms import ContatoForm, UserForm, LoginForm
+			
+			vou criar a view dentro do home
+				form = LoginForm()
+
+
+
+
+
+
+	criar view para logout
+		dentro da view.py
+			criar uma rot e a função para logout - apenas colocar a ferramenta logou_user() que ele ja desloga o usuario conectado e depois volto para a pagina home.html 
+			@app.route('/sair/')
+			def logout():
+    				logout_user()
+    				return redirect(url_for('homepage'))
+
+		dentro do arquivo index.html
+			{% if current_user.is_authenticated %}
+            		<span class="btn btn-primary">{{current_user.nome}} {{current_user.sobrenome}}</span>
+            		<a href="{{url_for('logout')}}" class="btn btn-danger">Sair</a>
+            		{% else %}
+            		<a href="{{url_for('cadastro')}}" class="btn btn-primary">Faça seu cadastro</a>
+            		{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

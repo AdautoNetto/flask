@@ -12,7 +12,7 @@ depois de importar a minha pasta eu inicializo o meu aplicativo
 
 depois preciso passar uma rota 
 	app.route('rota quie eu vou passar')
-	@app.route('/') -> essa é a pagina princiapl do meu aplicativo
+	@app.route('/') -> essa é a pagina principal do meu aplicativo
 
 o que é uma rota -> tudo o que vem depois da url de um site é uma rota 
 	youtube.com/@dautinn -> @dautinn é uma rota 
@@ -33,5 +33,38 @@ para rodar o meu aplicativo
 			app.run(debug=True)
 			comando debug=True é criado para que sempre que estiver uma atualização em meu código ele
 			roda
+
+depois de criar o meu arquivo main.py eu crio uma pasta que vai ser o meu aplicativo, normalmente do o nome dessa pasta
+referente ao que o meu projeto vai fazer (sistema) - essa pasta é criada dentro da minha pasta principal
+
+depois de criar a pasta preciso criar um arquivo que vai dizer que a pasta que eu criei é um modulo, o nome desse arquivo 
+tem que ser __init__.py
+	isso ai que precisa estar dentro do meu init - importação do flask e inicialização do app
+		from flask import Flask
+
+		app = Flask(__name__)
+
+depois preciso importar o meu arquivo init no meu arquivo main
+
+crio o meu arquivo views.py para passar as rotas das minhas paginas web, dentro da pasta do app
+(sistema) - depois de criar o arquivo passo as rotas e importo o meu app 
+		from sistema import app
+
+		@app.route('/')
+		def homepage():
+    			return 'Teste'
+
+dentro do arquivo __init.py preciso importar a minha rota, depois de criar ela na views.py, tenho que importar ela na minha ultima linha de código
+	from sistema.views import homepage
+
+crio a minha pasta templates dentro da minha pasta do aplicativo(sistema) e na views eu importo o rendertemplate
+	from flask import rendertemplate - para minhas rotas poder renderizar minhas páginas
+dentro da pasta templates eu coloco meus arquivos html-css e js e dentro dos meus arquivos html eu importo o bootstrap para ficar mais facil de criar as telas 
+
+
+
+
+
+
 
 

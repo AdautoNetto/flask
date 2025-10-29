@@ -1,0 +1,85 @@
+relação entre tabelas - como uma tabela se relaciona com outra
+
+criando relação entre tabelas(post e user(usuario))
+	entrar no arquivo models.py e criar a classe 'Post'
+		criar os campos necessários para essa classe, nesses campos crio
+		um campo que vai receber as informações da tabela usuario
+			class Post(db.Model):
+    				id = db.Column(db.Integer, primary_key=True)
+    				data_envio = db.Column(db.DateTime, default=datetime.utcnow())
+    				mensagem = db.Column(db.String, nullable=True)
+		criando o campo que vai pegar as informações do outro bd
+    				user_id = db.Column(db.Integer, db.ForeignKey, 'user.id' (nome do bd mais o campo que vou pegar as informações, nullable =True)
+    		
+		ir na outra tabela já criada e relacionar ela com essa nova
+			criar um campo 
+				post = db.relationship('nome classe', backref='user', lazy=True(para permitir a relação inversa))
+
+esses procedimentos para referenciar uma tabela a outra é como uma receita de bolo
+sempre que eu criar uma tabela nova que precisa referenciar-se com outra
+	na tabela que vou referenciar(nova) 
+		crio um  campo para receber as informações da outra tabela 
+			nome campo = adiciona uma coluna do tipo inteiro(db.Integer, coloco uma chave estrangeira(db.ForeignKe('nome tabela.nome coluna'), especificar se pode ser nulo o valor ou não(variavel) nullable=True))
+	na tabela antiga 
+		crio um campo de relação e nao de coluna 
+		passo o nome da minha classe
+		permitir ou nao o inverso dessa relação
+			nome campo = db.relationship('nome classe', backref='user', lazy=True)
+
+salvas essas alterações no banco de dados 
+	flask db migrate
+	flask db upgrade
+
+criar o formulário para salver o post 
+	dentro do arquivo forms.py 
+		criar uma classe e os campos que vou precisar
+			class PostForm(FlaskForm):
+        			mensagem = StringField('Mensagem', validators=[DataRequired()]) - campo para receber a mensagem
+        			btnSubmit = SubmitField('enviar') - campo para enviar a mensagem
+        			def save(self, user_id): - função para salvar no banco de dados no campo correto, receber o id do usuario em argumentos da função
+            				post = Post( - para salvar no banco de dados
+                				mensagem = self.mensagem.data,
+                				user_id = user_id
+            					)
+            					db.session.add(post)
+            					db.session.commit
+
+criar a minha view
+	abrir o arquivo views.py
+		criar uma rota - preciso importar o meu PostForm para usar aqui
+			@app.route('/post/novo/')
+			def PostNovo():
+    				form = PostForm()
+    				if form.validate_on_submit(): - condição para salvar e se salvar voltarr para a pagina home
+        				form.save(current_user.id)
+        				return render_template(url_for('homepage'))
+
+    				return render_template('post_novo.html', form=form)
+
+criar a minha pagina web(arquivo html)
+	
+
+--------------------------------------resuminho-----------------------------------
+crio minha classe no banco de dados no arquivo models.py 
+	preciso saber os campos que vou usar nessa classe e fazer a relação entre as classes
+
+crio meu formulário no arquivo forms.py
+	exemplo de classe criada para o comentario dos posts
+		class PostComentarioForm(FlaskForm):
+        		mensagem = StringField('Mensagem', validators=[DataRequired()])
+        		btnSubmit = SubmitField('enviar')
+
+        		def save(self, user_id, post_id):
+            			comentario = Post (
+                		mensagem = self.mensagem.data,
+                		post_id = post_id
+            			)
+
+            			db.session.add(comentario)
+            			db.session.commit()
+
+criar as minhas rotas no arquivo views.py
+
+
+
+

@@ -1,0 +1,24 @@
+o que é uma rota
+	https://www.yotube.com/@dautin -> a rota é o que vem depois do '/' (dominio) = @dautinn
+
+	literal é o nome do meu site mesmo, não é o dominio
+
+	caso eu não digite nada sera apenas a '/' e ela é a pagina principal do meu site
+
+	as outras coisas que vem nela´são as outras telas que vou entrando quando vou entrando em meu sistema web
+
+para criar rotas em meu código 
+	entro no arquivo views.py
+	crio uma nova rota -> @app.route('/nome-página/')
+	def nome função():
+		return 'arquivo da página'
+
+para criar um borão ou algo do tipo que vai jogar o usuario para a minha outra página eu preciso importar um 
+serviço que tem no flask -> url_for e depois no arquivo html eu preciso colocar a função no lugar do nome da pagina
+"{{(url_for('nome função')}}" -> coloco esse comando quando eu for colocar o link 
+
+ao criar rotas em minha página sempre coloca o caminho do link como o nome da função, caso mude o nome da 
+rota(página)
+
+
+

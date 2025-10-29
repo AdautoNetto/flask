@@ -1,0 +1,20 @@
+ele serve para eu controlar as views que os usuarios vao ter acesso dependendo da sua herança
+
+para implementar essas funcionaliade - usuario só acessa tal agina quando ele estiver logado
+	dentro do arquivo views.py
+		importar o login_required
+		colocar o @login_required em todas as views das paginas que preciso está logado para entrar	
+		
+para definir que um usuario não pode acessar determinada página                                                       
+	dentro do arquivo views.py
+	encontro a view que quero barrar de um usuario
+	vejo de que forma vou barrar esse usuario - id
+	if current_user.id ==1: return redirect('homepage')
+
+mas normalmente para fazer esse tipo de barragem(usuario especifico) adiciono um campo no meu banco de dados
+que se ele for verdadeiro ele passa e se for falso nao...
+
+                                                                            
+
+	
+

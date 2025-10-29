@@ -1,0 +1,14 @@
+como configurar e fazer o deploy no render 
+
+passos 
+criar conta do render
+	entrar no site do render 
+		render.com  
+	usar o github para se cadastrar para facilitar 
+
+
+configurar/preparar projeto
+
+configurar variavel de ambiente no servidor (Render)
+
+Usar banco de dados Postgresql no Render

@@ -1,0 +1,35 @@
+o que é o bootstrap -> é um framework gratuito de front-end, para desenvolvimentos de aplicações web responsivas
+ele é uma ferramenta popular para desenvolvimento htm,c css e js - ele me ajuda com plugins e etc a fazer o meu site
+responsivo
+
+container -> uma "caixa" para colocar os elementos do meu site 
+
+depois de criar um container eu crio uma linha chamada row e divide o meu container no meio e cada metade também 
+é dividido em 12 colunas 
+
+row -> linhas 
+
+col -> colunas
+
+as colunas podem se juntar para eu trabalhar em espaços maiores, no total em uma linha tenho 12 colunas 
+
+e dentro das colunas coloco o meu conteudo 
+
+principais classes no bottstrap
+	bg -> para colocar cor de fundo
+	text -> cor do texto
+	bt -> para criar botão
+	table -> para criar tabela responsiva
+	align -> para alinhar textos
+	justify-content -> para alinhas as minhas colunas 
+
+
+para usar o bootstrap dentro do meu arquivo html eu preciso importar ele 
+entro no google e pesquiso bootstrap e copio os link de css e js em meu arquivo html - o css colo debaixo de title
+e o js colo antes do fechamento do body
+
+para cada elemento eu crio uma div
+
+qualquer duvida que eu tiver de cores e de como utilizar o bootstrap posso ir no site e tentar me guiar através 
+dele
+

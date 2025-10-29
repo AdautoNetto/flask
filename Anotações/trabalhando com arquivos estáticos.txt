@@ -1,0 +1,16 @@
+preciso preparar o meu projeto para receber arquivos estáticos, criando uma pasta
+chamada static dentro da pasta estudo
+
+dentro da pasta static posso ter subpastas e o nome pode ser a minha escolha, mas 
+tenho que lembrar que vou usar o caminho das pastas para colocar arquivos estáticos
+
+para colocar o arquivo static no html - imagem
+	entrar na view e importar a url_form
+	entrar na pagina html que eu quero colocar o arquivo statico
+	abrir a tag img e dentr da src colocar 
+		{{ url_for('static', filename='img/logo.png' }}
+
+podemos colocar img, arquivos js e etc
+
+
+	

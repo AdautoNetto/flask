@@ -1,0 +1,64 @@
+o que é models
+	ele é responsavel por se comunicar com o banco de dados para conseguir pegar e guardar informações
+
+Flask-SQLAlchemy -> serve somente para criar o banco de dados 	
+Flask-Migrate -> serve para gerenciar as aletrações que vamos fazendo com o tempo
+
+como instalar as duas bibliotecas SQLAlchemy e Migrate 
+pip install Flask-SQLAlchemy Flask-Migrate 	
+
+como configurar as duas bibliotecas
+	entro onde está a minha aplicação que é o __init__.py 	
+	import as duas bibliotecas - from flask_sqlalchemy impor SQLAlchemy e from flask_migrate from Migrate
+	defino o meu banco de dados
+		app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db -> para definir onde vai ficar o 
+		meu banco de dados
+	comando para não ficar checando e aumentar a produtividade quando estiver rodando 
+		app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False -> desabilitando o check quando tiver uma 
+		alteração	
+	para definir a nossa variavel de banco de dados
+		db = SQLAlchemy(meu aplicativo (app))	
+		migrate = Migrate(app, db)			
+
+como começar a criar o nosso modelo para salvar no banco de dados a minha tabela
+	criar o arquivo que vai trablahar com o banco de dados 
+		vai ficar junto com o viwes e vai se chamar models.py e importa a minha variavel do banco de dados
+	cria a classe que vai criar a minha tabela no banco de dados - a minha classe precisa herdar o banco de dados em uma classe model, todas as classes de banco dados herda isso 
+		class Contato(db.Model):
+			id = db.Column(db.integer) - toda tabelas precisa ter um ID = identificador unico dessa tabela
+			nome = db.Column()
+			email = db.Column()
+			assunto = db.Column()
+			mensagem= db.Column()
+	configurar as tabelas que eu criei no banco de dados
+		class Contato(db.Model):
+			id = db.Column(db.integer, primary_key=True - serve para especificar que eu vou trabalhar com numero inteiro e outro especificar que essa tabela é meu primary key)
+			nome = db.Column(db.String, nullable=True - serve para especificar que eu vou trabalhar com string nessa coluna e que ela não pode ter um valor nulo)
+			email = db.Column(db.String, nullable=Truedb.String, nullable=True)
+			assunto = db.Column(db.String, nullable=True)
+			mensagem= db.Column(db.String, nullable=True)
+
+realmente criar o nosso banco de dados
+	importar para o arquivo __init__.py
+	definir a minha aplicação 
+		na mesma hierarquia do main crio um novo arquivo com o nome wsgi.py e dentro dele importo o app
+		se no lugar da minha pasta estudo eu tivesse chamado ela de app eu não ia precisar criar esse arquivo
+	rodando os comandos para criar o banco de dados
+		flask db init ou python -m flask db init -> rodar uma unica vez no meu projeto pois se ja tiver criado não vai funcionar esse comando
+		ao rodas esse comandos ele vai criar duas pastas: uma chaamda instance -> vai ficar o meu banco de dados e outra migrations -> vai criar o nossos aqruivos de migração, alterações e etc...
+	todas as alterações que eu frizer em meu arquivo models eu tenho que roda esses dois comandos
+		criar um commit e de fato rodar essas alterações - é no terminal
+			flask db migrate -m "o que eu fiz na alteração"
+			flask db upgrade
+	
+
+
+
+
+
+
+
+
+
+
+

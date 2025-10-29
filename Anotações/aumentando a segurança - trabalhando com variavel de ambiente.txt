@@ -1,0 +1,104 @@
+trabalhar com variavel de ambiente é uma forma segura de manter informações 
+sigilosas(secret_keys, dados do banco de dados e etc...
+
+essas variaveis só vão existir no servidor que eu crio, sendo assim posso compartilhar
+o código do app sem preocupação de estar disponibilizando dados sensiveis
+
+para trabalhar com essas informações utilizo a biblioteca os que ja vem instalada 
+no python 
+
+para definir uma variavel de ambiente posso definir no meu sistema operacional e
+posteriormente no servidor 
+
+posso utlizar a biblioteca dotenv para criar a variavel de sistema em um arquivo
+chamdado .env, esse arquivo  não pode ser compartilhado. ele irá criar uma variavel
+de ambiente para o meu projeto, depois devo criar as mesmas variaveis para o meu
+servidor
+	pip install python-dotenv
+
+em meu ambiente de produção não é recomendando criar o arquivo .env e sim colocar
+as varaiveis de ambiente dentro do meu servidor
+
+crio o arquivo .env - onde vai ficar armazenado as minhas variaveis de ambiente 
+para o meu código
+
+dentro do meu arquivo .gitignore eu ignoro esse arquivo para não subir no github
+	.env
+
+coloco todas as variaveis que são sigilosas dentro meu arquivo .env
+	DATABASE_URI = 'sqlite:///database.db'
+	SECRET_KEY = 'AS56D1A65F16SA5D1FG52677-A12343!!S65DF1AS561FDA5'
+meu arquivo .env vai ter uma lista de variaveis no formato de string, ele recebe
+um nome e um valor
+
+para pegar as variaveis e trabalhar com elas preciso instalar o dotenv
+	pip install python-dotenv
+posso instalar ela dentro do meu ambiente virtual se for na hora do desenvolvimento
+ou no meu sistema na hora de rodar o app
+
+depois de colocar os dados sigilosos no arquivo .env e instalar o dotenv eu vou
+no arquivo __init.py e chamo o arquivo e a biblioteca na forma de load_dotenv
+	from dotenv import load_dotenv
+	load_dotenv('.env')
+
+importo a biblioteca os para carregar a minha variavel de ambiente
+	import os
+
+procuro as minhas variaveis sigilosas dentro do arquivo .env e passo pasra o init
+	app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv['DATABASE_URI']
+	app.config['SECRET_KEY'] = os.getenv['SECRET_KEY']
+
+agora quando eu compartilho o meu sistema ele vai estar com essas variaveis de dados
+
+para criar um secret_key seguro preciso utilizo a biblioteca secret que vem com o python
+	criar arquivo creat_secret.py
+	importar a biblioteca secrets
+		import secrets
+	criar uma variavel que vai receber uma token de quantos caracteres eu quero
+		sk = secrets.token_hex(24)
+	imprimir a variavel 
+		print(sk)
+	pegar a chave e colocar no meu arquivo .env 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

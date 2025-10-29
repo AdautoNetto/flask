@@ -1,0 +1,65 @@
+preciso criar duas rotas 
+	a primeira para visualizar todos os contatos que eu tenho e a outra para
+	visualizar um contato especifico 
+
+dentro do arquivo views.py eu crio mais uma view que é para visualizar todos os
+meus contatos
+	@app.route('/contato/lista/')
+	def contatolista():
+		context = {} - > passo um contexto
+
+		return render_template('nome_arquivo', context=context) -> apontando
+	
+	crio meu arquivo html 
+
+	volto para o meu arquivo views e dentro da função que criei para visualizar
+	os meus contatos
+		 crio uma variavel que vai pegar informaçõees do meu bd
+			dados = Contato.query.all()
+	passo os dados que peguei do bd para o meu arquivo html onde o usuario
+	vai ver - esse context é o dentr da minha função 
+		context = {'dados': dados}
+	jeito errado de passar os dados do meu bd para a minha tabela criada
+	porque não sei quantos infomrações vou ter que passar em meu site
+	esse jeito é bem especifico 
+		passar parte por parte dos meus dados  
+		<td>{{context['dados'][0].nome}}</td>
+                <td>{{context['dados'][1].email}}</td>
+                <td>{{context['dados'][2].assunto}}</td>
+                <td>{{context['dados'][3].respondido}}</td>
+
+	para fazer um campo de pesquisa de informações eu preciso fazer uma 
+	condição com GET
+		def contatoLista():
+
+    			if request.method == 'GET':
+        			pesquisa = request.args.get('pesquisa', '')
+    
+
+    			dados = Contato.query.order_by('nome').all()
+    			if pesquisa != '':
+          			dados = dados.filter(nome=pesquisa)
+
+	preciso criar a minha estrutura GET no meu arquivo html
+		<form class="get" class="'row">
+                    <div class="col-9">
+                        <input type="text" name="pesquisa" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-primary">Pesquisar</button>
+                    </div>
+                </form>
+essa maneira de pegar dados do meu bd não é boa, pois ela sempre vai dar erro
+se algo não estiver do jeito que era quando digitei o código, o jeito certo é com
+laço de repetição FOR
+
+
+
+
+
+
+
+
+
+
+

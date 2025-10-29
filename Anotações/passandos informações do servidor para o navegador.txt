@@ -1,0 +1,20 @@
+toda variavel que eu estiver recuperando do meu banco de dados ou do meu arquivo main, coloco dentro de {} duplas
+	{{nome_variavel}}
+
+para criar uma variavel crio ela em uma rota que ela vai ser usada, tipo na homepage dentro da função 
+depois de criar a variavel coloco dentro dos parentes de return render_template(nome_variavel=nome_variavel)
+--------------------------------------------------------ou----------------------------------------------------------
+posso criar um dicionário chamado context e criar todas as variaveis normalmente e depois na hora de passar ela 
+para o meu return render_template coloco apenas o nome do dicionário
+
+e na hora de passar a minha variavel para o meu arquivo html eu coloco:
+	{{nome_dicionário.nome_variavel}}
+
+o nome do dicionário pode ser qualquer um, mas normalmente coloco context
+
+
+
+
+
+
+

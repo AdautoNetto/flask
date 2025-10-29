@@ -1,0 +1,32 @@
+a ideia de reaproveitar os meus arquivos html é de fazer um arquivo base que segue
+os mesmos códigos dos outros e depois os outros arquivos vao copiar desse arquivo
+base
+
+depois de criar o meu arquivo base e deixar a estrutura dele igual a que eu vou 
+usar dos meus outros arquivos eu preciso passar um comando que vou definir onde vai
+ser editado o meu bloco, posso definir um ou mais blocos
+	{% block nome do bloco(content) %} -> por padrão para um bloco de conteudo é content
+	
+sempre que eu abro um bloco eu preciso fechar 
+	{% endblock %}
+
+para importar os códigos do meu arquivo base eu preciso colocar o nome do arquivo
+e depois chamar o bloco efechar ele
+	{% extends 'nome-arquivo.html'%}
+
+	{% block nome do bloco(content) %}
+		códigos do meu arquivo atual 
+	{% endblock %}
+resumo -> o arquivo base vai exportar o código padrão que vai ter em todos os meus 
+outros arquivos e os outros arquivos vao importar ele usando os comandos 
+
+para pegar somente alguns pedaços de html de um arquivo e pasasr para outro
+função include
+	para incluir os códigos de algum arquivo 
+		{% iclude 'nome-arquivo.html' %}
+
+essas funcionalidades são muito boa para criar rodapé - cabeçalho e itens que vai
+ter em outros arquivos meeus - crio o arquivo com o nome do que ele vai ser e 
+configuro ele 
+
+

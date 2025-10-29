@@ -1,0 +1,38 @@
+rota dinamicas normalmente é usada para trazer dados do seu banco de dados
+trabalha podendo receber valores variaveis e desse valores vir respostas variaveis
+
+como fazer um rota dinamica para mostrar os dados de uma pessoa que fez cadastro
+	entrar no arquivo views.py e cria uma nova rota
+		@app.route('/contato(rota fixa)/<int:id>/(dizendo que essa rota vai receber um numero inteiro que é da variavel id')
+
+	criar uma função 
+		def contatoDetail(id(variavel que vai ir para a função))
+		o nome que eu coloquei na variavel para buscar no bd tem que ser o mesmo
+		nome que vou passar para a minha função
+
+	renderizar a pagina html
+		return render_template('contato_detail', id=id)
+
+	criar o arquivo html 
+		passar a variavel para o arquivo 		
+			{{ variavel que vai buscar os dado no bd}}
+		passar somente o necessário do banco de dados
+
+	editar o arquivo contato.html
+		criar um botão que ao clicar levar para a linha do id do usuario
+			<td><a href="{{url_for{'contatoDetail', id=linha.id}}}">Link</a></td>
+	
+	buscar o dado(variavel) no banco de dados
+		obj = contato.query.get(id) -> utilizo o get para pegar somente o que eu quero com base na variavel id
+
+quando passamos entre chaves estamos dizendo que vai ser uma variavel
+
+a mesma variavel que passo na hora de criar rota eu passo na minha função criada
+
+dentro da função faço dessa variavel um objeto para pegar as outras info que preciso
+
+crio o link para a minha rota e passo o id do usuario que vai ser atraves da linha dele
+
+no arquivo que quero mostrar os dados pego cada dado que preciso e nao deixo editavel
+
+	
