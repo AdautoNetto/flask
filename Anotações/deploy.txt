@@ -6,9 +6,79 @@ criar conta do render
 		render.com  
 	usar o github para se cadastrar para facilitar 
 
-
 configurar/preparar projeto
-
+	instalar o gunicorn dentro do meu sistema para deixar o projeto em produção
+		pip install gunicorn
+	atualizar as bibliotecas que eu estou usando para o render possa instalar as mesmas que eu estou usando
+		pip freeze > requirements.txt
+	atualizar o meu github
+		git add.
+		git commit -m "Atualização para o Render"
+		git push
+	abrir o render para configurar o aplicativo
+		clicar no botão 'new' 
+		clicar na opção 'web services'
+		clicar na opção que diz que vamos fazer o deploy pelo git
+		conectar o repositório e instalar todos
+		clicar no botão 'connect'
+	depois de clicar no repositório 
+		da um nome para o aplicativo - precisa ser unico
+		escolher a região mais proxima 
+		escoler o main 
+		em buid command colocar o nome que eu estou trabalhando com requirements
+		em start command alterar para o nomee da sua pasta do seu aplicativo(estudo)
+		escolher o plano para hospedar o seu sistema
+		criar hospedagem 
+			se der erro em alguma biblioteca na hora de passar é 
+			necessário ir no arquivo requirements.txt e tirar a versão
+			das bibliotecas que deram erro 
+			
+			depois de tirar a versão da bibliotecas é necessário 
+			mandar essa atualização para o github, depois de toda
+			atualização do git preciso fazer o deply do sistema no 
+			site 
+				git add.
+				git commit -m "Nome do salvamento"
+				git push
+		provavelmente vai dar algum erro e esse erro soluciono configurando
+		a minha variavel de ambiente
+		
 configurar variavel de ambiente no servidor (Render)
-
+	as variaveis de ambiente estão no meu arquivo chamado .env
+	
+	ir na variavel de ambiente que deu erro dentro do arquivo .env 
+		copiar o nome e o valor da variavel de ambiente (copiar o valor sem as aspas)
+	ir no render dentro do meu sistema 
+		ir na opção Environment na aba da esquerda
+			colar o nome da variavel na opçao 'key'		
+			cola o valor da variavel na opção 'value'
+		
+	
 Usar banco de dados Postgresql no Render
+tirar o banco de dados do sqlite e passar para o pstgreesql 
+	criar um banco de dados PostgreSQL
+		ir no botão 'new'
+		ir na opção PostreSQL
+			definir um nome unico para o banco de dados
+			definir a versão, nao precisa ser a mais recente 
+			ir no botão para criar o meu banco de dados
+	depois de ja criado o banco de dados 
+		ir no dashborad do banco de dados e pegar o urls
+			se eu for trabalhar internamente no render pego a url
+				internal database URL
+			se eu for trabalhar o desk para conectar no bd online
+				External database URL
+		copiar a opção External databse URL
+		colar a opção no arquivo .env naa variavel DATABASE_URI
+		instalar a biblioteca para trabalhar com postgresql dentro do python
+			pip install psycopg2
+		atualizar o meu requirements depois de colocar a biblioteca
+			pip freeze > requirements.txt
+		configurar a biblioteca dentro do meu servidor 
+			atualizar o meu git 
+			copiar o Internal database URL 
+			
+PAREI NO MINUTO 4:26
+			
+
+
